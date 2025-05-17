@@ -24,7 +24,7 @@ let
 
   checksums = {
     x86_64-linux = "sha256-7Y7weRdkpY0DmDtzXFLhszZ2R93tYFgkPqHSh/+3VGY=";
-    aarch64-linux = "";
+    aarch64-linux = "sha256-OTDXrARFMgd2ubofcrFxrebUe39/QGJU5NafoF9U0Ag=";
   };
   
   vimbaXLibLocation = "$out/lib";
