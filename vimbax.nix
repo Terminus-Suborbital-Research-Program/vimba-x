@@ -1,53 +1,39 @@
-{
-  stdenv,
-  fetchzip,
-  makeWrapper,
-  autoPatchelfHook,
-  libgcc,
-  waylandpp,
-  xorg,
-  libxcb,
-  fontconfig,
-  libxkbcommon,
-  libGL,
-  xcbutilrenderutil,
-  lib 
-}:
+{ stdenv, fetchzip, makeWrapper, autoPatchelfHook, libgcc, waylandpp, xorg
+, libxcb, fontconfig, libxkbcommon, libGL, xcbutilrenderutil, lib }:
 
 let
   system = stdenv.hostPlatform.system;
 
-  urlSuffix = 
-    if system == "x86_64-linux" then "Linux64"
-    else if system == "aarch64-linux" then "Linux_ARM64"
-    else abort "Unsupported system ${system}";
+  urlSuffix = if system == "x86_64-linux" then
+    "Linux64"
+  else if system == "aarch64-linux" then
+    "Linux_ARM64"
+  else
+    abort "Unsupported system ${system}";
 
   checksums = {
     x86_64-linux = "sha256-7Y7weRdkpY0DmDtzXFLhszZ2R93tYFgkPqHSh/+3VGY=";
     aarch64-linux = "sha256-OTDXrARFMgd2ubofcrFxrebUe39/QGJU5NafoF9U0Ag=";
   };
-  
-  vimbaXLibLocation = "$out/lib";
-  
-  binaries = {
-   ListCameras_VmbC = "vimbax-list-cameras";
-   ListFeatures_VmbC = "vimbax-list-features";
-   VimbaXViewer = "VimbaXViewer";
-   VimbaXFirmwareUpdater = "VimbaXFirmwareUpdater";
-  };
-in
 
-stdenv.mkDerivation rec {
+  vimbaXLibLocation = "$out/lib";
+
+  binaries = {
+    ListCameras_VmbC = "vimbax-list-cameras";
+    ListFeatures_VmbC = "vimbax-list-features";
+    VimbaXViewer = "VimbaXViewer";
+    VimbaXFirmwareUpdater = "VimbaXFirmwareUpdater";
+  };
+
+in stdenv.mkDerivation rec {
   pname = "vimba-x";
   version = "2025-1";
 
-  nativeBuildInputs = [
-    autoPatchelfHook
-    makeWrapper
-  ];
+  nativeBuildInputs = [ autoPatchelfHook makeWrapper ];
 
   src = fetchzip {
-    url = "https://downloads.alliedvision.com/VimbaX/VimbaX_Setup-${version}-${urlSuffix}.tar.gz";
+    url =
+      "https://downloads.alliedvision.com/VimbaX/VimbaX_Setup-${version}-${urlSuffix}.tar.gz";
     sha256 = checksums.${system};
   };
 
@@ -69,7 +55,7 @@ stdenv.mkDerivation rec {
     libGL
     xcbutilrenderutil
   ];
-  
+
   preBuild = ''
     mkdir -p ${vimbaXLibLocation}/bin
     addAutoPatchelfSearchPath ${vimbaXLibLocation}/bin/
