@@ -12,10 +12,15 @@
         pkgs = import nixpkgs { inherit system; };
 
         vimbax = pkgs.callPackage ./vimbax.nix { };
+        vmbpy = pkgs.callPackage ./vmbpy.nix { inherit vimbax; };
       in {
         packages = {
-          inherit vimbax;
+          inherit vimbax vmbpy;
           default = vimbax;
+        };
+
+        devShells.default = pkgs.mkShell {
+          packages = [ (pkgs.python311.withPackages (ps: [ vmbpy ])) ];
         };
       });
 }
