@@ -3,6 +3,8 @@
 let
   archSuffix = if stdenv.hostPlatform.system == "x86_64-linux" then
     "linux_x86_64"
+  else if stdenv.hostPlatform.system == "aarch64-linux" then
+    "linux_aarch64"
   else
     throw "Unsupported System!";
 
