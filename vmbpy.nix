@@ -12,7 +12,7 @@ let
 
   wheelName = "vmbpy-${version}-py3-none-${archSuffix}.whl";
 
-  pythonDeps = with python312Packages; [ numpy opencv-python ];
+  pythonDeps = with python312Packages; [ numpy opencv-python-headless ];
 in python312Packages.buildPythonPackage {
   pname = "vmbpy";
   inherit version;
