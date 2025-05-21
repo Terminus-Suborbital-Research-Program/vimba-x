@@ -28,7 +28,7 @@ in python311Packages.buildPythonPackage {
     done
   '';
 
-  propogatedBuildInputs = [ vimbax ];
+  propagatedBuildInputs = [ vimbax ];
 
   pythonImportsCheck = [ "vmbpy" ];
 }

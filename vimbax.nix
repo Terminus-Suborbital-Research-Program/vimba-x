@@ -60,11 +60,19 @@ in stdenv.mkDerivation rec {
     mkdir -p ${vimbaXLibLocation}/bin
     addAutoPatchelfSearchPath ${vimbaXLibLocation}/bin/
     cp -r $src/* ${vimbaXLibLocation}/ 
-    runHook postInstall
   '';
 
   # No build phase - vendor libraries (ew)
   installPhase = lib.mapAttrsToList (name: value: ''
     makeWrapper ${vimbaXLibLocation}/bin/${name} $out/bin/${value} --set GENICAM_GENTL64_PATH "${vimbaXLibLocation}/cti"
   '') binaries;
+
+  postFixup = let hook = "$out/nix-support/setup-hook";
+  in ''
+    mkdir -p $out/nix-support
+    touch ${hook}
+    cat > $out/nix-support/setup-hook << 'EOF'
+      export GENICAM_GENTL64_PATH=${placeholder "out"}/lib/cti
+    EOF
+  '';
 }

@@ -20,7 +20,7 @@
         };
 
         devShells.default = pkgs.mkShell {
-          packages = [ (pkgs.python311.withPackages (ps: [ vmbpy ])) ];
+          packages = [ vimbax (pkgs.python311.withPackages (ps: [ vmbpy ])) ];
         };
       });
 }
