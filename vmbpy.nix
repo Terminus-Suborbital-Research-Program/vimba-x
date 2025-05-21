@@ -11,6 +11,8 @@ let
   version = "1.1.0";
 
   wheelName = "vmbpy-${version}-py3-none-${archSuffix}.whl";
+
+  pythonDeps = with python311Packages; [ numpy opencv-python ];
 in python311Packages.buildPythonPackage {
   pname = "vmbpy";
   inherit version;
@@ -28,7 +30,7 @@ in python311Packages.buildPythonPackage {
     done
   '';
 
-  propagatedBuildInputs = [ vimbax ];
+  propagatedBuildInputs = [ vimbax ] ++ pythonDeps;
 
   pythonImportsCheck = [ "vmbpy" ];
 }
