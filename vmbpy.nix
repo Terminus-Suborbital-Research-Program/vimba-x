@@ -1,4 +1,4 @@
-{ lib, stdenv, autoPatchelfHook, python312, python312Packages, vimbax }:
+{ stdenv, python312, python312Packages, vimbax }:
 
 let
   archSuffix = if stdenv.hostPlatform.system == "x86_64-linux" then
